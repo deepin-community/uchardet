@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+include /usr/share/dpkg/architecture.mk
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+ifeq ($(DEB_HOST_ARCH_CPU),i386)
+  # Uchardet seems to rely on IEEE 754 float rounding. Tell the build system to
+  # use -ffloat-store to make testsuite pass and make i386 give consistent
+  # results between architectures.
+  # See https://bugs.freedesktop.org/show_bug.cgi?id=101033
+  EXTRA_CMAKE_ARGS = -DTARGET_ARCHITECTURE=x86 -DCHECK_SSE2=OFF
+endif
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(EXTRA_CMAKE_ARGS)

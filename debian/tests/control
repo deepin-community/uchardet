@@ -1,0 +1,5 @@
+Tests: build
+Depends: build-essential, libuchardet-dev, pkg-config
+
+Tests: cli
+Depends: uchardet

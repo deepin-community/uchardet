@@ -1,0 +1,80 @@
+uchardet (0.0.7-1) unstable; urgency=medium
+
+  [ James Cowgill ]
+  * New upstream release.
+
+  * d/copyright: Refer to common copy of the MPL-1.1 license
+  * d/control:
+    - Use debhelper 13.
+    - Set Rules-Requires-Root: no.
+    - Bump standards version to 4.5.0.
+  * d/rules: Use the new CMake defines to activate -ffloat-store on x86.
+  * d/upstream/metadata: Add upstream repository metadata.
+  * d/tests: Make "build" tests cross test friendly. (LP: #1869239)
+
+  [ Ondřej Nový ]
+  * d/tests: Use AUTOPKGTEST_TMP instead of ADTTMP.
+
+ -- James Cowgill <jcowgill@debian.org>  Sun, 31 May 2020 14:26:11 +0100
+
+uchardet (0.0.6-3) unstable; urgency=medium
+
+  * debian/compat: Use debhelper compat 11.
+  * debian/control:
+    - Migrate Vcs URLs to salsa.d.o.
+    - Drop unnecessary Testsuite: autopkgtest field.
+    - Bump standards version to 4.1.4.
+  * debian/copyright: Use secure copyright format URL.
+
+ -- James Cowgill <jcowgill@debian.org>  Sat, 02 Jun 2018 12:57:31 +0100
+
+uchardet (0.0.6-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+  * debian/control:
+    - Set Homepage to freedesktop site instead of gnome.
+    - Bump standards to 4.0.0 (no changes required).
+  * debian/rules:
+    - Use -ffloat-store on i386 to fix FTBFS.
+
+ -- James Cowgill <jcowgill@debian.org>  Sun, 18 Jun 2017 22:12:59 +0100
+
+uchardet (0.0.6-1) experimental; urgency=medium
+
+  * New upstream release. (Closes: #814007)
+  * New maintainer. (Closes: #862463)
+
+  * debian/compat:
+    - Use debhelper 10
+  * debian/control:
+    - Enable multiarch.
+    - Remove obsolete DM-Upload-Allowed field.
+    - Update Homepage.
+    - Canonicalize Vcs-Git and Vcs-Browser.
+    - Remove dead URLs from package descriptions.
+    - Remove useless Section field from libuchardet0.
+    - Bump standards version to 3.9.8.
+  * debian/copyright:
+    - Set upstream license to MPL, GPL or LGPL.
+    - Add myself to the packaging copyright.
+  * debian/docs:
+    - Don't ship AUTHORS file which contains no information not already in
+      the copyright file.
+  * debian/libuchardet0.symbols:
+    - Add symbols file.
+  * debian/rules:
+    - Remove boilerplate comments.
+    - Enable all hardening options.
+  * debian/tests:
+    - Add some autopkgtests for the library and cli utility.
+  * debian/watch:
+    - Update watch file for new freedesktop upstream.
+
+ -- James Cowgill <jcowgill@debian.org>  Sat, 13 May 2017 12:35:07 +0100
+
+uchardet (0.0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #633767)
+
+ -- Asias He <asias.hejun@gmail.com>  Mon, 11 Jul 2011 23:29:36 +0800

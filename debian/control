@@ -1,0 +1,54 @@
+Source: uchardet
+Priority: optional
+Section: libs
+Maintainer: James Cowgill <jcowgill@debian.org>
+Build-Depends: debhelper-compat (= 13), cmake
+Rules-Requires-Root: no
+Standards-Version: 4.5.0
+Homepage: https://www.freedesktop.org/wiki/Software/uchardet/
+Vcs-Git: https://salsa.debian.org/debian/uchardet.git
+Vcs-Browser: https://salsa.debian.org/debian/uchardet
+
+Package: uchardet
+Section: utils
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: universal charset detection library - cli utility
+ uchardet is a C language binding of the original C++ implementation
+ of the universal charset detection library by Mozilla.
+ .
+ uchardet is a encoding detector library, which takes a sequence of
+ bytes in an unknown character encoding without any additional
+ information, and attempts to determine the encoding of the text.
+ .
+ This package contains the cli detection utility.
+
+Package: libuchardet0
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: universal charset detection library - shared library
+ uchardet is a C language binding of the original C++ implementation
+ of the universal charset detection library by Mozilla.
+ .
+ uchardet is a encoding detector library, which takes a sequence of
+ bytes in an unknown character encoding without any additional
+ information, and attempts to determine the encoding of the text.
+ .
+ This package contains the shared library.
+
+Package: libuchardet-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libuchardet0 (= ${binary:Version}), ${misc:Depends}
+Description: universal charset detection library - development files
+ uchardet is a C language binding of the original C++ implementation
+ of the universal charset detection library by Mozilla.
+ .
+ uchardet is a encoding detector library, which takes a sequence of
+ bytes in an unknown character encoding without any additional
+ information, and attempts to determine the encoding of the text.
+ .
+ This package contains the development support files.

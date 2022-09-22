@@ -1,0 +1,12 @@
+#!/bin/sh
+# autopkgtest check: Test the cli against some basic strings
+
+set -e
+
+# Run it on some ascii
+[ $(echo 'hello world' | uchardet) = 'ASCII' ]
+echo "run1: OK"
+
+# Run it on some chinese
+[ $(echo '汉字漢字統一編碼萬國碼' | uchardet) = 'UTF-8' ]
+echo "run2: OK"
