@@ -1,3 +1,9 @@
+uchardet (0.0.7-1deepin0) unstable; urgency=medium
+
+  * No source change upload against GCC 12.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 20 Sep 2024 12:20:16 +0800
+
 uchardet (0.0.7-1) unstable; urgency=medium
 
   [ James Cowgill ]
