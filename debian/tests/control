@@ -3,3 +3,6 @@ Depends: build-essential, libuchardet-dev, pkg-config
 
 Tests: cli
 Depends: uchardet
+
+Tests: cmake
+Depends: build-essential, cmake, libuchardet-dev

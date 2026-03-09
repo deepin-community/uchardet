@@ -1,8 +1,19 @@
-uchardet (0.0.7-1deepin0) unstable; urgency=medium
+uchardet (0.0.8-1) unstable; urgency=medium
 
-  * No source change upload against GCC 12.
+  * New upstream release. (Closes: #1031291)
 
- -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 20 Sep 2024 12:20:16 +0800
+  * d/copyright: Update copyright date.
+  * d/control:
+    - Bump standards version.
+    - Add dependency on uchardet to libuchardet-dev.
+  * d/libuchardet-dev.install:
+    - Install CMake config files.
+  * d/tests:
+    - Refactor detect.c into a separate file.
+    - Add build tests for the static library.
+    - Add cmake build test.
+
+ -- James Cowgill <jcowgill@debian.org>  Wed, 29 Nov 2023 22:47:32 +0000
 
 uchardet (0.0.7-1) unstable; urgency=medium
 

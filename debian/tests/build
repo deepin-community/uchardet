@@ -10,6 +10,7 @@ then
 	exit 1
 fi
 
+cp debian/tests/detect.c "$AUTOPKGTEST_TMP"
 cd "$AUTOPKGTEST_TMP"
 
 if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
@@ -18,63 +19,29 @@ else
     CROSS_COMPILE=
 fi
 
-cat <<EOF > detect.c
-#include <stdio.h>
-#include <uchardet.h>
-
-// Runs uchardet on stdin and prints the result to stdout
-
-int main(void)
-{
-    uchardet_t handle = uchardet_new();
-    if (handle == NULL)
-    {
-        perror("uchardet_new");
-        return 1;
-    }
-
-    // Read all data into uchardet
-    for (;;)
-    {
-        char buf[4096];
-        size_t len = fread(buf, 1, sizeof(buf), stdin);
-        if (ferror(stdin))
-        {
-            perror("fread");
-            uchardet_delete(handle);
-            return 1;
-        }
-
-        if (uchardet_handle_data(handle, buf, len) != 0)
-        {
-            perror("uchardet_handle_data");
-            return 1;
-        }
-
-        if (len < sizeof(buf))
-            break;
-    }
-
-    // Get character set
-    uchardet_data_end(handle);
-    puts(uchardet_get_charset(handle));
-    uchardet_delete(handle);
-    return 0;
-}
-EOF
-
-# Build program
+# manual dynamic
 ${CROSS_COMPILE}gcc -Wall -Werror -I/usr/include/uchardet -o detect1 detect.c -luchardet
 echo "build1: OK"
-${CROSS_COMPILE}gcc -Wall -Werror -o detect2 detect.c $(${CROSS_COMPILE}pkg-config --cflags --libs uchardet)
+
+# manual static
+${CROSS_COMPILE}gcc -static -Wall -Werror -I/usr/include/uchardet -o detect2 detect.c -luchardet -lstdc++
 echo "build2: OK"
 
-# Run it on some ascii
-[ $(echo 'hello world' | ./detect1) = 'ASCII' ]
-[ $(echo 'hello world' | ./detect2) = 'ASCII' ]
-echo "run1: OK"
+# pkg-config dynamic
+${CROSS_COMPILE}gcc -Wall -Werror -o detect3 detect.c $(${CROSS_COMPILE}pkg-config --cflags --libs uchardet)
+echo "build3: OK"
 
-# Run it on some chinese
-[ $(echo '汉字漢字統一編碼萬國碼' | ./detect1) = 'UTF-8' ]
-[ $(echo '汉字漢字統一編碼萬國碼' | ./detect2) = 'UTF-8' ]
-echo "run2: OK"
+# pkg-config static
+${CROSS_COMPILE}gcc -static -Wall -Werror -o detect4 detect.c $(${CROSS_COMPILE}pkg-config --static --cflags --libs uchardet)
+echo "build4: OK"
+
+# Run each program
+for prog in detect1 detect2 detect3 detect4; do
+    # Run it on some ascii
+    [ $(echo 'hello world' | ./$prog) = 'ASCII' ]
+    echo "run1: $prog OK"
+
+    # Run it on some chinese
+    [ $(echo '汉字漢字統一編碼萬國碼' | ./$prog) = 'UTF-8' ]
+    echo "run2: $prog OK"
+done

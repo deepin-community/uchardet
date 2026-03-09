@@ -38,32 +38,18 @@
 #
 # ##### END LICENSE BLOCK #####
 
-import re
-
 ## Mandatory Properties ##
 
-# The human name for the language, in English.
-name = 'Danish'
-# Use 2-letter ISO 639-1 if possible, 3-letter ISO code otherwise,
-# or use another catalog as a last resort.
-code = 'da'
-# ASCII characters are also used in French.
+name = 'Norwegian'
+code = 'no'
 use_ascii = True
-# The charsets we want to support and create data for.
-charsets = ['ISO-8859-15', 'ISO-8859-1', 'WINDOWS-1252', 'IBM865' ]
+charsets = ['IBM865', 'ISO-8859-15', 'ISO-8859-1', 'WINDOWS-1252']
 
 ## Optional Properties ##
 
 # Alphabet characters.
-# If use_ascii=True, there is no need to add any ASCII characters.
-# If case_mapping=True, there is no need to add several cases of a same
-# character (provided Python algorithms know the right cases).
-alphabet = 'æøå'
-# The start page. Though optional, it is advised to choose one yourself.
-start_pages = ['Forside']
-# give possibility to select another code for the Wikipedia URL.
+alphabet = 'æøåéìîàêÆØÅ'
+# Some pages that should contain most norwegian-norwegian norwegian
+start_pages = ['Norsk', 'Saft', 'Hund']
 wikipedia_code = code
-# 'a' and 'A' will be considered the same character, and so on.
-# This uses Python algorithm to determine upper/lower-case of a given
-# character.
 case_mapping = True

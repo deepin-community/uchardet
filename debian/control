@@ -4,7 +4,7 @@ Section: libs
 Maintainer: James Cowgill <jcowgill@debian.org>
 Build-Depends: debhelper-compat (= 13), cmake
 Rules-Requires-Root: no
-Standards-Version: 4.5.0
+Standards-Version: 4.6.2
 Homepage: https://www.freedesktop.org/wiki/Software/uchardet/
 Vcs-Git: https://salsa.debian.org/debian/uchardet.git
 Vcs-Browser: https://salsa.debian.org/debian/uchardet
@@ -42,7 +42,10 @@ Package: libuchardet-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libuchardet0 (= ${binary:Version}), ${misc:Depends}
+Depends:
+ libuchardet0 (= ${binary:Version}),
+ uchardet (= ${binary:Version}),
+ ${misc:Depends}
 Description: universal charset detection library - development files
  uchardet is a C language binding of the original C++ implementation
  of the universal charset detection library by Mozilla.
