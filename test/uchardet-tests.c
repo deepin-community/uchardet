@@ -52,9 +52,11 @@ detect(FILE *fp)
     char        buffer[BUFFER_SIZE];
     int         i;
 
-    while (!feof(fp))
+    while (1)
     {
         size_t len = fread(buffer, 1, BUFFER_SIZE, fp);
+        if (len == 0)
+            break;
         int retval = uchardet_handle_data(handle, buffer, len);
         if (retval != 0)
         {
@@ -122,6 +124,9 @@ main(int argc, char ** argv)
 
     /* In a unit test, 0 means success, other returned values mean failure. */
     success = (strcmp(charset, expected_charset) != 0);
+    if (success) {
+        fprintf(stderr, "Got %s, expected %s\n", charset, expected_charset);
+    }
 
     free(charset);
     free(filename);

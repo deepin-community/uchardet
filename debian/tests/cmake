@@ -1,0 +1,35 @@
+#!/bin/sh
+# autopkgtest check: Build and run a very simple program against uchardet
+
+set -e
+
+# Require $AUTOPKGTEST_TMP for temporary build files
+if [ -z "$AUTOPKGTEST_TMP" ]
+then
+	echo "Required envvar \"\$AUTOPKGTEST_TMP\" is not set" >&2
+	exit 1
+fi
+
+cp debian/tests/CMakeLists.txt debian/tests/detect.c "$AUTOPKGTEST_TMP"
+cd "$AUTOPKGTEST_TMP"
+
+if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
+    export CC="$DEB_HOST_GNU_TYPE-gcc"
+    export CXX="$DEB_HOST_GNU_TYPE-g++"
+fi
+
+# Run CMake and build program
+CFLAGS='-Wall -Werror' cmake .
+make VERBOSE=1
+echo "build: OK"
+
+# Run each program
+for prog in detect_dynamic detect_static; do
+    # Run it on some ascii
+    [ $(echo 'hello world' | ./$prog) = 'ASCII' ]
+    echo "run1: $prog OK"
+
+    # Run it on some chinese
+    [ $(echo '汉字漢字統一編碼萬國碼' | ./$prog) = 'UTF-8' ]
+    echo "run2: $prog OK"
+done

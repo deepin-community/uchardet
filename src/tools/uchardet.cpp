@@ -35,12 +35,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 #include "../uchardet.h"
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
 #include <getopt.h>
-#include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifndef VERSION
@@ -48,15 +45,17 @@
 #endif
 #define BUFFER_SIZE 65536
 
-char buffer[BUFFER_SIZE];
+static char buffer[BUFFER_SIZE];
 
-void detect(FILE * fp)
+static void detect(FILE * fp)
 {
     uchardet_t handle = uchardet_new();
 
-    while (!feof(fp))
+    while (1)
     {
         size_t len = fread(buffer, 1, BUFFER_SIZE, fp);
+        if (len == 0)
+            break;
         int retval = uchardet_handle_data(handle, buffer, len);
         if (retval != 0)
         {
@@ -75,7 +74,7 @@ void detect(FILE * fp)
     uchardet_delete(handle);
 }
 
-void show_version()
+static void show_version()
 {
     printf("\n");
     printf("uchardet Command Line Tool\n");
@@ -86,7 +85,7 @@ void show_version()
     printf("\n");
 }
 
-void show_usage()
+static void show_usage()
 {
     show_version();
     printf("Usage:\n");
